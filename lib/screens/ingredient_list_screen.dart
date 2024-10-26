@@ -21,7 +21,7 @@ class IngredientListScreen extends StatelessWidget {
   final List<Ingredient> meats = [
     Ingredient(name: 'Escalope', price: 5.3, quantity: 250, image: 'assets/images/escalope.png'),
     Ingredient(name: 'Packaged Chicken', price: 14.7, quantity: 1000, image: 'assets/images/chicken.png'),
-    Ingredient(name: 'Meat', price: 39.8, quantity: 1000, image: 'assets/images/meat.png'),
+    Ingredient(name: 'Meat', price: 39.8, quantity: 1000, image: 'assets/images/meats.png'),
     Ingredient(name: 'Eggs 6 pieces', price: 2.3, quantity: 6, image: 'assets/images/eggs6p.png'),
     Ingredient(name: 'Eggs 8 pieces', price: 3.4, quantity: 8, image: 'assets/images/eggs8p.png'),
   ];
@@ -76,29 +76,21 @@ class IngredientListScreen extends StatelessWidget {
         title: Text("$category - $shopName"),
       ),
       body: selectedIngredients.isNotEmpty
-          ? ListView.builder(
+          ? Padding(
               padding: const EdgeInsets.all(16.0),
-              itemCount: selectedIngredients.length,
-              itemBuilder: (context, index) {
-                final ingredient = selectedIngredients[index];
-
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: ListTile(
-                    leading: Image.asset(
-                      ingredient.image,
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(
-                      ingredient.name,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                    subtitle: Text("Prix: ${ingredient.price} DT | Quantité: ${ingredient.quantity} g"),
-                  ),
-                );
-              },
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Deux colonnes pour la grille
+                  crossAxisSpacing: 16.0, // Espacement horizontal entre les cartes
+                  mainAxisSpacing: 16.0, // Espacement vertical entre les cartes
+                  childAspectRatio: 0.75, // Ratio pour ajuster la taille des cartes
+                ),
+                itemCount: selectedIngredients.length,
+                itemBuilder: (context, index) {
+                  final ingredient = selectedIngredients[index];
+                  return IngredientCard(ingredient: ingredient);
+                },
+              ),
             )
           : Center(
               child: Text(
@@ -106,6 +98,62 @@ class IngredientListScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
             ),
+    );
+  }
+}
+
+// Widget pour afficher chaque carte d'ingrédient
+class IngredientCard extends StatelessWidget {
+  final Ingredient ingredient;
+
+  const IngredientCard({Key? key, required this.ingredient}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      elevation: 4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Image.asset(
+              ingredient.image,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              children: [
+                Text(
+                  ingredient.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  "${ingredient.quantity}g, ${ingredient.price} DT",
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.add_circle, color: Colors.green),
+            onPressed: () {
+              // Action lors de l'ajout d'un ingrédient
+            },
+          ),
+        ],
+      ),
     );
   }
 }
