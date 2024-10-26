@@ -10,15 +10,16 @@ class IngredientsScreen extends StatelessWidget {
     "Monoprix": {
       "Fruits": "assets/images/fruits.png",
       "Vegetables": "assets/images/vegetables.png",
-      "Meats": "assets/images/meats.png",
-      "Diary": "assets/images/dairy.png",
+      "Meats": "assets/images/meat.png",
+      "Dairy": "assets/images/dairy.png", // Correction ici pour "Dairy"
       "Spices": "assets/images/spices.png",
     },
     "MG": {
       "Fruits": "assets/images/fruits.png",
       "Vegetables": "assets/images/vegetables.png",
-      "Meats": "assets/images/meats.png",
-      "Diary": "assets/images/dairy.png",
+      "Meats": "assets/images/meat.png",
+      "Dairy": "assets/images/dairy.png",
+      "Charcuterie": "assets/images/charcuterie.png" // Correction ici pour "Dairy"
     },
     "Toumis Garden": {
       "Fruits": "assets/images/fruits.png",
@@ -62,7 +63,7 @@ class IngredientsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => IngredientListScreen(
-                      category: category,
+                      category: category, // Assurez-vous que la catégorie est correcte
                       shopName: shopName,
                     ),
                   ),
