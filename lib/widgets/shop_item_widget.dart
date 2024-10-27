@@ -4,7 +4,7 @@ import '../models/shop_item_model.dart';
 class ShopItemWidget extends StatelessWidget {
   final ShopItemModel item;
 
-  const ShopItemWidget({Key? key, required this.item}) : super(key: key);
+  const ShopItemWidget({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

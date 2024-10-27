@@ -4,7 +4,7 @@ import 'ingredient_list_screen.dart';
 class IngredientsScreen extends StatelessWidget {
   final String shopName;
 
-  IngredientsScreen({required this.shopName});
+  const IngredientsScreen({super.key, required this.shopName});
 
   final Map<String, Map<String, String>> shopCategories = const {
     "Monoprix": {
@@ -24,6 +24,8 @@ class IngredientsScreen extends StatelessWidget {
     "Toumis Garden": {
       "Fruits": "assets/images/fruits.png",
       "Vegetables": "assets/images/vegetables.png",
+      "Dried Fruits": "assets/images/dried_fruits.png",
+      "Sugars and Cake Mixes": "",
     },
   };
 

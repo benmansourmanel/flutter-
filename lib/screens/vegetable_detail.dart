@@ -136,7 +136,7 @@ class _VegetableDetailScreenState extends State<VegetableDetailScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  const Text("250g, 8.3\DT",
+                  const Text("250g, 8.3DT",
                       style: TextStyle(
                           color: Color(0xffFF324B),
                           fontSize: 20,

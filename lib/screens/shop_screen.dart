@@ -31,9 +31,9 @@ class ShopScreen extends StatelessWidget {
 
   // Liste des points de vente avec nom et logo
   static const List<Map<String, String>> shopItems = [
-    const {"name": "Monoprix", "logoPath": "assets/images/monoprix_logo.png"},
-    const {"name": "MG", "logoPath": "assets/images/mg_logo.png"},
-    const {"name": "Toumis Garden", "logoPath": "assets/images/toumis_garden_logo.png"},
+    {"name": "Monoprix", "logoPath": "assets/images/monoprix_logo.png"},
+    {"name": "MG", "logoPath": "assets/images/mg_logo.png"},
+    {"name": "Toumis Garden", "logoPath": "assets/images/toumis_garden_logo.png"},
   ];
 
   Widget _buildShopItem(BuildContext context, String shopName, String logoPath) {

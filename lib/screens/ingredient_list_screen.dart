@@ -31,6 +31,14 @@ class IngredientListScreen extends StatelessWidget {
     Ingredient(name: 'Paprika', price: 4.2, quantity: 100, image: 'assets/images/paprika.png'),
     Ingredient(name: 'Vanilla Flower', price: 1.4, quantity: 100, image: 'assets/images/vanilla-flower.png'),
     Ingredient(name: 'Nutmegs', price: 2.7, quantity: 100, image: 'assets/images/nutmegs.png'),
+    Ingredient(name: 'Tomato Sauce ', price: 5.7, quantity:1000, image: 'assets/images/tomato_sauce.png'),
+    Ingredient(name: 'Ravioli ', price: 7.2 , quantity:100, image: 'assets/images/ravioli.png'),
+    Ingredient(name: 'Fusilli Pasta ', price: 1.3, quantity:500, image: 'assets/images/fusilli_pasta.png'),
+    Ingredient(name: 'Spagetti Pasta ', price: 0.5, quantity:500, image: 'assets/images/spagetti.png'),
+    Ingredient(name: 'Penne Pasta ', price: 0.5, quantity:500, image: 'assets/images/penne.png'),
+    Ingredient(name: 'Rice ', price: 9.7, quantity:1000, image: 'assets/images/rice.png'),
+    Ingredient(name: 'Noodels ', price: 1.7, quantity:1000, image: 'assets/images/noodels.png'),
+    Ingredient(name: 'Olive Oil ', price: 3.7, quantity:1000, image: 'assets/images/olive_oil.png'),
   ];
 
   final List<Ingredient> dairy = [
@@ -39,6 +47,9 @@ class IngredientListScreen extends StatelessWidget {
     Ingredient(name: 'Yagourt', price: 0.7, quantity: 100, image: 'assets/images/yagourt.png'),
     Ingredient(name: 'Slice Cheese', price: 2.5, quantity: 1, image: 'assets/images/slice_cheese.png'),
     Ingredient(name: 'Camembert', price: 3.8, quantity: 100, image: 'assets/images/camembert.png'),
+    Ingredient(name: 'Sour Cream ', price: 2.9, quantity:250, image: 'assets/images/sour_cream.png'),
+    Ingredient(name: 'Apple Yagourt', price: 0.89, quantity:1000, image: 'assets/images/appel_yag.png'),
+    Ingredient(name: 'Feta Cheese ', price: 4.2, quantity:100, image: 'assets/images/feta.png'),
   ];
 
   // Liste des ingrédients pour la catégorie "Charcuterie"
@@ -48,8 +59,20 @@ class IngredientListScreen extends StatelessWidget {
     Ingredient(name: 'Salami', price: 13.0, quantity: 100, image: 'assets/images/salami.png'),
     Ingredient(name: 'Beef Salami ', price: 3.450, quantity: 100, image: 'assets/images/salami_.png'),
   ];
+  final List<Ingredient> driedFruits= [
+    Ingredient(name: ' Dried Kiwi fruit', price: 3.4, quantity:100, image: 'assets/images/kiwi.png'),
+    Ingredient(name: ' Dried apricotes fruit', price: 2.9, quantity:100, image: 'assets/images/apricots.png'),
 
-  IngredientListScreen({required this.category, required this.shopName});
+  ];
+  final List<Ingredient> sugarsAndCakeMixes=[
+    Ingredient(name: 'Sugar', price: 2.6, quantity: 1000, image: 'assets/images/sugar.png'),
+    Ingredient(name: 'Flour', price: 1.3, quantity: 1000, image: 'assets/images/flour.png'),
+    Ingredient(name: 'Chocolate', price: 4.68, quantity: 250, image: 'assets/images/chocolate.png'),
+    Ingredient(name: 'Chocolate Bar', price: 2.6, quantity: 300, image: 'assets/images/chocolate_bar.png'),
+    Ingredient(name: ' Instant Yeast', price: 1.74, quantity: 250, image: 'assets/images/levure.png'),
+    Ingredient(name: 'Ice Cream', price: 4.9, quantity: 500, image: 'assets/images/icecream.png'),
+  ];
+  IngredientListScreen({super.key, required this.category, required this.shopName});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +90,13 @@ class IngredientListScreen extends StatelessWidget {
       selectedIngredients = dairy;
     } else if (category == "Charcuterie") { // Vérifiez si la catégorie est "Charcuterie"
       selectedIngredients = charcuterie;
-    } else {
+    } else if (category == "Dried Fruits") {
+        selectedIngredients = driedFruits;
+    } else if (category == "Sugars and Cake Mixes"){
+      selectedIngredients =sugarsAndCakeMixes;
+    }
+    
+    else {
       selectedIngredients = [];
     }
 
@@ -92,7 +121,7 @@ class IngredientListScreen extends StatelessWidget {
                 },
               ),
             )
-          : Center(
+          : const Center(
               child: Text(
                 "Aucun ingrédient trouvé pour cette catégorie",
                 style: TextStyle(fontSize: 18, color: Colors.grey),
@@ -106,7 +135,7 @@ class IngredientListScreen extends StatelessWidget {
 class IngredientCard extends StatelessWidget {
   final Ingredient ingredient;
 
-  const IngredientCard({Key? key, required this.ingredient}) : super(key: key);
+  const IngredientCard({super.key, required this.ingredient});
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +164,7 @@ class IngredientCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   "${ingredient.quantity}g, ${ingredient.price} DT",
                   style: const TextStyle(
@@ -147,7 +176,7 @@ class IngredientCard extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.add_circle, color: Colors.green),
+            icon: const Icon(Icons.add_circle, color: Colors.green),
             onPressed: () {
               // Action lors de l'ajout d'un ingrédient
             },
