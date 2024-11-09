@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'screens/splash.dart';
-import 'screens/welcome.dart';
-import 'screens/registration.dart';
-import 'screens/dashboard.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mealmate/screens/shops_ingredient.dart';
+// Import generated Firebase options
 import 'screens/vegetables.dart';
-import 'screens/vegetable_detail.dart';
-import 'screens/cart.dart';
-import 'screens/shop_screen.dart';
-import 'screens/ingredients_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'screens/dashboard.dart';
+import 'screens/registration.dart';
+import 'screens/welcome.dart';
+import 'screens/meals_recipes.dart';
 import 'utils/routes.dart';
+import 'screens/login_page.dart'; // Import the login page
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -21,19 +23,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Grocery App",
+      title: "MealMate",
       theme: ThemeData(fontFamily: GoogleFonts.lato().fontFamily),
-      initialRoute: "/",
+      initialRoute: "/login", // Set login page as the initial route
       routes: {
-        "/": (context) => const SplashScreen(),
+        "/login": (context) => const LoginPage(),
         MyRoutes.welcomeRoute: (context) => const WelcomeScreen(),
         MyRoutes.registrationRoute: (context) => const RegistrationScreen(),
         MyRoutes.dashboardRoute: (context) => const DashboardScreen(),
         MyRoutes.vegetablesRoute: (context) => const VegetablesScreen(),
-        MyRoutes.vegetableDetailRoute: (context) => const VegetableDetailScreen(),
-        MyRoutes.cartRoute: (context) => const CartScreen(),
-        MyRoutes.shopsRoute: (context) => const ShopScreen(),
-        MyRoutes.ingredientsRoute: (context) => IngredientsScreen(shopName: "Monoprix"),
+        MyRoutes.mealsrecipesRoute: (context) => const MealsRecipesPage(),
+        MyRoutes.shopsingredientRoute: (context) => const ShopsIngredientPage(),
+        // Add other routes as needed
       },
     );
   }

@@ -39,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     child: const Text(
-                      "Get your groceries delivered to your home",
+                      "Discover, shop, and connect with food lovers",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
@@ -48,7 +48,7 @@ class WelcomeScreen extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 32),
                     child: const Text(
-                      "The best delivery app in town for delivering your daily fresh groceries",
+                      "Explore recipes, shop groceries, find restaurants, and join a vibrant community of food enthusiasts!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -62,7 +62,7 @@ class WelcomeScreen extends StatelessWidget {
                     widthFactor: 0.5,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, MyRoutes.registrationRoute);
+                        Navigator.pushNamed(context, MyRoutes.dashboardRoute);
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -73,26 +73,7 @@ class WelcomeScreen extends StatelessWidget {
                         shape: const StadiumBorder(),
                         backgroundColor: const Color(0xff23AA49),
                       ),
-                      child: const Text("Shop now"),
-                    ),
-                  ),
-                  const SizedBox(height: 16), // Ajoute un espacement
-                  FractionallySizedBox(
-                    widthFactor: 0.5,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, MyRoutes.shopsRoute); // Ajoute la route vers ShopScreen
-                      },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        shape: const StadiumBorder(),
-                        backgroundColor: const Color(0xff23AA49),
-                      ),
-                      child: const Text("Explore Shops"), // Texte du bouton
+                      child: const Text("Start now"),
                     ),
                   ),
                 ],

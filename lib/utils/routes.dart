@@ -1,10 +1,11 @@
 class MyRoutes {
-  static const String welcomeRoute = "/welcome";
-  static const String registrationRoute = "/registration";
-  static const String dashboardRoute = "/dashboard";
-  static const String vegetablesRoute = "/vegetables";
-  static const String vegetableDetailRoute = "/vegetable-detail";
-  static const String cartRoute = "/cart";
-  static const String shopsRoute = "/shops";
-  static const String ingredientsRoute = "/ingredients"; // Nouvelle route ajoutée
+  static String welcomeRoute = "/welcome";
+  static String registrationRoute = "/registration";
+  static String dashboardRoute = "/dashboard";
+  static String vegetablesRoute = "/vegetables";
+  static String vegetableDetailRoute = "/vegetable_detail";
+  static String cartRoute = "/cart";
+  static String mealsrecipesRoute = "/meals_recipes";
+  static String drawerRoute = "/drawer";
+  static String shopsingredientRoute = "/shops_ingredient";
 }
