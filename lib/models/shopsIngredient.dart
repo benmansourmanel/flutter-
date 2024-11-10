@@ -2,69 +2,48 @@ class Shop {
   final String id;
   final String name;
   final String location;
-  final List<Ingredient> ingredients;
+  final List<Category> categories;
+  final String? imageUrl;
 
   Shop({
     required this.id,
     required this.name,
     required this.location,
-    required this.ingredients,
+    required this.categories,
+    this.imageUrl,
   });
 
-  // Méthode `fromMap` pour convertir une map Firestore en instance de Shop
-  factory Shop.fromMap(Map<String, dynamic> data, String documentId) {
+  factory Shop.fromMap(Map<String, dynamic> map) {
     return Shop(
-      id: documentId,
-      name: data['name'] ?? '',
-      location: data['location'] ?? '',
-      ingredients: (data['ingredients'] as List<dynamic>?)?.map((ingredientData) {
-            return Ingredient.fromMap(ingredientData as Map<String, dynamic>);
-          }).toList() ?? [],
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+      location: map['location'] ?? '',
+      categories: List<Category>.from(map['categories']?.map((x) => Category.fromMap(x)) ?? []),
+      imageUrl: map['imageUrl'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'location': location,
-      'ingredients': ingredients.map((ingredient) => ingredient.toMap()).toList(),
+      'categories': categories.map((x) => x.toMap()).toList(),
+      'imageUrl': imageUrl,
     };
   }
 }
 
-class Ingredient {
-  final String nameIngredient;
-  final double price;
-  final int quantity;
-  final Category category;
+class Category {
+  final String name;
 
-  Ingredient({
-    required this.nameIngredient,
-    required this.price,
-    required this.quantity,
-    required this.category,
-  });
+  Category({required this.name});
 
-  factory Ingredient.fromMap(Map<String, dynamic> data) {
-    return Ingredient(
-      nameIngredient: data['nameIngredient'] ?? '',
-      price: data['price']?.toDouble() ?? 0.0,
-      quantity: data['quantity'] ?? 0,
-      category: Category.values.firstWhere(
-        (e) => e.toString() == 'Category.${data['category']}',
-        orElse: () => Category.fruit,
-      ),
-    );
+  factory Category.fromMap(Map<String, dynamic> map) {
+    return Category(name: map['name']);
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'nameIngredient': nameIngredient,
-      'price': price,
-      'quantity': quantity,
-      'category': category.toString().split('.').last,
-    };
+    return {'name': name};
   }
 }
-
-enum Category { fruit, vegetables, dairy, spices, charcuterie }

@@ -1,11 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import '../models/shopsIngredient.dart';
 
 class ShopFormPage extends StatefulWidget {
-  final Shop? shop; // Shop existant à modifier, le cas échéant
-  final Function(Shop) onSubmit; // Fonction appelée lors de la soumission
+  final Shop? shop;
+  final Function(Shop) onSubmit;
 
   const ShopFormPage({this.shop, required this.onSubmit, super.key});
 
@@ -18,15 +19,16 @@ class _ShopFormPageState extends State<ShopFormPage> {
   final ImagePicker picker = ImagePicker();
   String name = '';
   String location = '';
+  List<Category> categories = [];
   XFile? pickedFile;
 
   @override
   void initState() {
     super.initState();
-    // Pré-remplir les champs si un shop existant est fourni
     if (widget.shop != null) {
       name = widget.shop!.name;
       location = widget.shop!.location;
+      categories = widget.shop!.categories;
     }
   }
 
@@ -43,12 +45,13 @@ class _ShopFormPageState extends State<ShopFormPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       widget.onSubmit(Shop(
-        id: widget.shop?.id ?? '', // ID pour un shop existant
+        id: widget.shop?.id ?? '',
         name: name,
         location: location,
-        ingredients: widget.shop?.ingredients ?? [], // Liste des ingrédients (vide si nouveau shop)
+        categories: categories,
+        imageUrl: pickedFile?.path,
       ));
-      Navigator.pop(context); // Retour après soumission
+      Navigator.pop(context);
     }
   }
 
@@ -56,77 +59,53 @@ class _ShopFormPageState extends State<ShopFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.shop == null ? 'Add shop' : 'Modify shop'),
-        backgroundColor: const Color(0xff23AA49),
+        title: Text(widget.shop == null ? 'Add Shop' : 'Modify Shop'),
+        backgroundColor: Color(0xff23AA49),
       ),
-      body: Stack(
-        children: [
-          // Image de fond
-          Opacity(
-            opacity: 0.3,
-            child: Image.asset(
-              'assets/images/store.jpg', // Chemin de l'image de fond
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
-          // Contenu du formulaire
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: ' Shop Name'),
-                    initialValue: name,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please write shop name...';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      name = value!;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Location'),
-                    initialValue: location,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please write the location..';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      location = value!;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _pickImage,
-                    child: const Text('Upload image'),
-                  ),
-                  if (pickedFile != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Image.file(File(pickedFile!.path)),
-                    ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff23AA49),
-                    ),
-                    child: const Text('Submit'),
-                  ),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Name'),
+                initialValue: name,
+                validator: (value) {
+                  if (value!.isEmpty) return 'Please enter a shop name.';
+                  return null;
+                },
+                onSaved: (value) => name = value!,
               ),
-            ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Location'),
+                initialValue: location,
+                validator: (value) {
+                  if (value!.isEmpty) return 'Please enter a location.';
+                  return null;
+                },
+                onSaved: (value) => location = value!,
+              ),
+              // Add additional form fields for categories and other fields as needed
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text('Upload Image'),
+              ),
+              if (pickedFile != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Image.file(File(pickedFile!.path)),
+                ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submitForm,
+                style: ElevatedButton.styleFrom(backgroundColor: Color(0xff23AA49)),
+                child: const Text('Submit'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

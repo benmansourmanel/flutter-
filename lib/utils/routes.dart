@@ -8,4 +8,5 @@ class MyRoutes {
   static String mealsrecipesRoute = "/meals_recipes";
   static String drawerRoute = "/drawer";
   static String shopsingredientRoute = "/shops_ingredient";
+  
 }
