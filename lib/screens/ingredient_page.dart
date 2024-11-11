@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'ingredient_list_page.dart'; // Make sure to import your ingredient list page
+import 'ingredient_list_page.dart'; // Assurez-vous d'importer la page de la liste des ingrédients
+import 'dart:ui'; // Pour utiliser le BackdropFilter
 
 class IngredientPage extends StatefulWidget {
   final String shopId;
@@ -47,7 +48,7 @@ class _IngredientPageState extends State<IngredientPage> {
         _imageController.text = data['image'] ?? '';
       }
     } catch (e) {
-      print("Erreur lors du chargement des données : $e");
+      print("Error loading data : $e");
     }
   }
 
@@ -77,14 +78,14 @@ class _IngredientPageState extends State<IngredientPage> {
         }
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Ingrédient ${_isEditing ? "modifié" : "ajouté"} avec succès !')),
+          SnackBar(content: Text('Ingredient ${_isEditing ? "Modified" : "Added"} successfully!')),
         );
 
         Navigator.pop(context);
       } catch (e) {
-        print("Erreur lors de l'enregistrement de l'ingrédient : $e");
+        print("Error saving ingredient: $e");
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erreur lors de l\'enregistrement de l\'ingrédient.')),
+          SnackBar(content: Text('Error saving ingredient.')),
         );
       }
     }
@@ -94,55 +95,102 @@ class _IngredientPageState extends State<IngredientPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isEditing ? 'Modifier un ingrédient' : 'Ajouter un ingrédient'),
+        title: Text(_isEditing ? 'Modify Ingredient' : 'Add Ingredient'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'Nom'),
-                validator: (value) => value == null || value.isEmpty ? 'Entrez le nom de l\'ingrédient' : null,
-              ),
-              TextFormField(
-                controller: _priceController,
-                decoration: InputDecoration(labelText: 'Prix/250g'),
-                keyboardType: TextInputType.number,
-                validator: (value) => value == null || value.isEmpty ? 'Ajoutez le prix' : null,
-              ),
-              TextFormField(
-                controller: _quantityController,
-                decoration: InputDecoration(labelText: 'Quantité par 250g'),
-                keyboardType: TextInputType.number,
-                validator: (value) => value == null || value.isEmpty ? 'Ajoutez la quantité' : null,
-              ),
-              TextFormField(
-                controller: _imageController,
-                decoration: InputDecoration(labelText: 'URL de l\'image (optionnel)'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: saveIngredient,
-                child: Text(_isEditing ? 'Modifier' : 'Ajouter'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => IngredientListPage(shopId: widget.shopId),
-                    ),
-                  );
-                },
-                child: Text('Voir la liste des ingrédients'),
-              ),
-            ],
+      body: Stack(
+        children: [
+          // Image Background with Blur Effect
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/store.png',
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
+          // Apply BackdropFilter for blur effect
+          Positioned.fill(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Définir l'intensité du flou
+              child: Container(
+                color: Colors.black.withOpacity(0.4), // Ajoute une teinte sombre pour améliorer la lisibilité
+              ),
+            ),
+          ),
+          // Content of the page
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Nom',
+                      labelStyle: TextStyle(color: Colors.black), // Couleur du label
+                    ),
+                    style: TextStyle(color: Colors.black), // Couleur du texte
+                    validator: (value) => value == null || value.isEmpty ? 'Enter name ingredient!' : null,
+                  ),
+                  TextFormField(
+                    controller: _priceController,
+                    decoration: InputDecoration(
+                      labelText: 'Price/DT',
+                      labelStyle: TextStyle(color: Colors.black), // Couleur du label
+                    ),
+                    style: TextStyle(color: Colors.black), // Couleur du texte
+                    keyboardType: TextInputType.number,
+                    validator: (value) => value == null || value.isEmpty ? 'Add price!' : null,
+                  ),
+                  TextFormField(
+                    controller: _quantityController,
+                    decoration: InputDecoration(
+                      labelText: 'Quantity/250g',
+                      labelStyle: TextStyle(color: Colors.black), // Couleur du label
+                    ),
+                    style: TextStyle(color: Colors.black), // Couleur du texte
+                    keyboardType: TextInputType.number,
+                    validator: (value) => value == null || value.isEmpty ? 'Add quantity!' : null,
+                  ),
+                  TextFormField(
+                    controller: _imageController,
+                    decoration: InputDecoration(
+                      labelText: 'URL image (optional)',
+                      labelStyle: TextStyle(color: Colors.black), // Couleur du label
+                    ),
+                    style: TextStyle(color: Colors.black), // Couleur du texte
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: saveIngredient,
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                    child: Text(
+                      _isEditing ? 'Modify' : 'Add',
+                      style: TextStyle(color: Colors.black), // Couleur du texte du bouton
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => IngredientListPage(shopId: widget.shopId),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'View Ingredient List',
+                      style: TextStyle(color: Colors.black), // Couleur du texte
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

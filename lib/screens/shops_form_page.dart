@@ -49,7 +49,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
         name: name,
         location: location,
         categories: categories,
-        imageUrl: pickedFile?.path,
+        imagePath: pickedFile?.path,
       ));
       Navigator.pop(context);
     }

@@ -1,9 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/shopsIngredient.dart';
 import 'shops_form_page.dart';
-import 'ingredient_page.dart'; // Assurez-vous que le chemin d'importation est correct.
+import 'ingredient_page.dart';
 
 class ShopsPage extends StatefulWidget {
   const ShopsPage({super.key});
@@ -95,41 +94,75 @@ class _ShopsPageState extends State<ShopsPage> {
         title: const Text('Shops'),
         backgroundColor: Color(0xff23AA49),
       ),
-      body: ListView.builder(
-        itemCount: shops.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(shops[index].name),
-            subtitle: Text(shops[index].location),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.food_bank, color: Colors.green),
-                  onPressed: () => _navigateToIngredientPage(shops[index].id),
-                ),
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ShopFormPage(
-                          shop: shops[index],
-                          onSubmit: (modifiedShop) => modifyShop(index, modifiedShop),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => deleteShop(index),
-                ),
-              ],
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/shopsback.png'), // Chemin de l'image de fond
+                fit: BoxFit.cover,
+              ),
             ),
-          );
-        },
+          ),
+          GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // Nombre de colonnes
+              crossAxisSpacing: 10.0, // Espacement horizontal entre les grilles
+              mainAxisSpacing: 10.0, // Espacement vertical entre les grilles
+              childAspectRatio: 3 / 2, // Ratio de la taille des enfants
+            ),
+            itemCount: shops.length,
+            itemBuilder: (context, index) {
+              return Card(
+                color: Colors.white.withOpacity(0.8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      shops[index].name,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      shops[index].location,
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.food_bank, color: Colors.green),
+                          onPressed: () => _navigateToIngredientPage(shops[index].id),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ShopFormPage(
+                                  shop: shops[index],
+                                  onSubmit: (modifiedShop) => modifyShop(index, modifiedShop),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => deleteShop(index),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
