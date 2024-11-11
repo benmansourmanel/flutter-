@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mealmate/models/shopsIngredient.dart';
+import 'package:mealmate/screens/ingredient_list_page.dart';
 import 'package:mealmate/screens/shops_ingredient.dart';
 // Import generated Firebase options
 import 'screens/vegetables.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         MyRoutes.vegetablesRoute: (context) => const VegetablesScreen(),
         MyRoutes.mealsrecipesRoute: (context) => const MealsRecipesPage(),
         MyRoutes.shopsingredientRoute: (context) => const ShopsPage(),
+        MyRoutes.ingredientListRoute:(context) => IngredientListPage(shopId: '',),
          
         // Add other routes as needed
       },

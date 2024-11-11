@@ -47,3 +47,61 @@ class Category {
     return {'name': name};
   }
 }
+class Ingredient {
+  String id;
+  String name;
+  String quantity;
+  String price;
+  String? imageUrl;
+
+  Ingredient({
+    required this.id,
+    required this.name,
+    required this.quantity,
+    required this.price,
+    this.imageUrl,
+  });
+
+  factory Ingredient.fromMap(Map<String, dynamic> map) {
+    return Ingredient(
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+      quantity: map['quantity'] ?? '',
+      price: map['price'] ?? '',
+      imageUrl: map['imageUrl'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'quantity': quantity,
+      'price': price,
+      'imageUrl': imageUrl,
+    };
+  }
+
+  Ingredient copyWith({
+    String? id,
+    String? name,
+    String? quantity,
+    String? price,
+    String? imageUrl,
+  }) {
+    return Ingredient(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      quantity: quantity ?? this.quantity,
+      price: price ?? this.price,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
+  }
+
+  // Setters
+  set setName(String name) => this.name = name;
+  set setQuantity(String quantity) => this.quantity = quantity;
+  set setPrice(String price) => this.price = price;
+  set setImageUrl(String? imageUrl) => this.imageUrl = imageUrl;
+}
+

@@ -1,10 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:mealmate/screens/categoryDetailPage.dart';
 import '../models/shopsIngredient.dart';
-import 'shops_form_page.dart'; // Assurez-vous que le chemin d'importation est correct.
+import 'shops_form_page.dart';
+import 'ingredient_page.dart'; // Assurez-vous que le chemin d'importation est correct.
 
 class ShopsPage extends StatefulWidget {
   const ShopsPage({super.key});
@@ -80,6 +79,15 @@ class _ShopsPageState extends State<ShopsPage> {
     }
   }
 
+  void _navigateToIngredientPage(String shopId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => IngredientPage(shopId: shopId),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,6 +104,10 @@ class _ShopsPageState extends State<ShopsPage> {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+                IconButton(
+                  icon: Icon(Icons.food_bank, color: Colors.green),
+                  onPressed: () => _navigateToIngredientPage(shops[index].id),
+                ),
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
