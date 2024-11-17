@@ -3,14 +3,14 @@ class Shop {
   final String name;
   final String location;
   final List<Category> categories;
-  final String? imagePath;
+  final String? imageUrl;
 
   Shop({
     required this.id,
     required this.name,
     required this.location,
     required this.categories,
-    this.imagePath,
+    this.imageUrl,
   });
 
   factory Shop.fromMap(Map<String, dynamic> map) {
@@ -19,7 +19,7 @@ class Shop {
       name: map['name'] ?? '',
       location: map['location'] ?? '',
       categories: List<Category>.from(map['categories']?.map((x) => Category.fromMap(x)) ?? []),
-      imagePath: map['imagePath'],
+      imageUrl: map['imageUrl'],
     );
   }
 
@@ -29,7 +29,7 @@ class Shop {
       'name': name,
       'location': location,
       'categories': categories.map((x) => x.toMap()).toList(),
-      'imagePath': imagePath,
+      'imageUrl': imageUrl,
     };
   }
 }

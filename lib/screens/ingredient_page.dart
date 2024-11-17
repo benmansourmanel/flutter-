@@ -144,7 +144,7 @@ class _IngredientPageState extends State<IngredientPage> {
                   TextFormField(
                     controller: _quantityController,
                     decoration: InputDecoration(
-                      labelText: 'Quantity/250g',
+                      labelText: 'Quantity/g',
                       labelStyle: TextStyle(color: Colors.black), // Couleur du label
                     ),
                     style: TextStyle(color: Colors.black), // Couleur du texte

@@ -21,7 +21,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
   String location = '';
   List<Category> categories = [];
   XFile? pickedFile;
-
+//'initialisation de l'état 
   @override
   void initState() {
     super.initState();
@@ -40,7 +40,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
       });
     }
   }
-
+//submettre l form
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -49,7 +49,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
         name: name,
         location: location,
         categories: categories,
-        imagePath: pickedFile?.path,
+        imageUrl: pickedFile?.path,
       ));
       Navigator.pop(context);
     }
